@@ -16,17 +16,34 @@ puts 'Data destroyed'
 
 
 puts 'Creating users'
-brandon = User.create(name: 'Brandon', email: 'brandon@brandon.com', password: '123', user_type: 0)
+
+# Static user data
+brandon = User.create(name: 'Brandon', email: 'brandon@brandon.com', password: '123', user_type: 2)
 robert = User.create(name: 'Robert', email: 'robert@robert.com', password: '123', user_type: 1)
 lindsey = User.create(name: 'Lindsey', email: 'lindsey@lindsey.com', password: '123', user_type: 1)
-geoffrey = User.create(name: 'Geoffrey', email: 'geoffrey@geoffrey.com', password: '123', user_type: 2)
-cory = User.create(name: 'Cory', email: 'cory@cory.com', password: '123', user_type: 2)
-joey = User.create(name: 'Joey', email: 'joey@joey.com', password: '123', user_type: 2)
+geoffrey = User.create(name: 'Geoffrey', email: 'geoffrey@geoffrey.com', password: '123', user_type: 0)
+cory = User.create(name: 'Cory', email: 'cory@cory.com', password: '123', user_type: 0)
+joey = User.create(name: 'Joey', email: 'joey@joey.com', password: '123', user_type: 0)
+
+# Faker user data
+3.times do
+  User.create(name: Faker::Name.name, email: Faker::Internet.email, password: '123', user_type: 2)
+end
+
+15.times do
+  User.create(name: Faker::Name.name, email: Faker::Internet.email, password: '123', user_type: 1)
+end
+
+60.times do
+  User.create(name: Faker::Name.name, email: Faker::Internet.email, password: '123', user_type: 0)
+end
+
 puts 'Users created'
 
 
 patients = User.where(user_type: 0)
 nurses = User.where(user_type: 1)
+dispatchers = User.where(user_type: 2)
 
 
 puts 'Creating messages'
@@ -40,9 +57,8 @@ puts 'Messages created'
 
 puts 'Creating appointments'
 today = DateTime.now
-dispatchers = User.select(user_type: 2)
 patients.each do |patient|
-  5.times do
+  rand(1..5).times do
     date_time = DateTime.now + rand(1..10).days
     date_time.change(hour: rand(8..17), minute: 0)
     Appointment.create(start_time: date_time, length: rand(0..1) ? 60 : 30, patient: patient, nurse: nurses.sample)
@@ -63,13 +79,13 @@ puts 'Appointment notes created'
 
 puts 'Creating dispatcher / patient relationships'
 patients.each do |patient|
-  DispatcherPatient.create(dispatcher: brandon, patient: patient)
+  DispatcherPatient.create(dispatcher: dispatchers.sample, patient: patient)
 end
 puts 'Dispatcher / patient relationships created'
 
 
 puts 'Creating dispatcher / nurse relationships'
 nurses.each do |nurse|
-  DispatcherNurse.create(dispatcher: brandon, nurse: nurse)
+  DispatcherNurse.create(dispatcher: dispatchers.sample, nurse: nurse)
 end
 puts 'Dispatcher / nurse relationships created'
