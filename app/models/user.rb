@@ -4,8 +4,8 @@ class User < ApplicationRecord
   has_many :received_messages, class_name: 'Message', foreign_key: :recipient_id
 
   # Appointments and Nurse / Patient relationships
-  has_many :patient_appointments, class_name: 'Appointment', foreign_key: :patient_id
-  has_many :nurse_appointments, class_name: 'Appointment', foreign_key: :nurse_id
+  has_many :patient_appointments, class_name: 'Appointment', foreign_key: :patient_id, dependent: :destroy
+  has_many :nurse_appointments, class_name: 'Appointment', foreign_key: :nurse_id, dependent: :destroy
   has_many :nurses, through: :patient_appointments
   has_many :patients, through: :nurse_appointments
 
@@ -22,4 +22,8 @@ class User < ApplicationRecord
   has_one :dispatcher, through: :pd_relationship
 
   has_secure_password
+
+  def self.user_type
+    {patient: 0, nurse: 1, dispatcher: 2}
+  end
 end
