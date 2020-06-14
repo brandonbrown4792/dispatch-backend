@@ -15,27 +15,110 @@ User.destroy_all
 puts 'Data destroyed'
 
 
+addresses = [
+  '2060 Peachtree Rd, Atlanta, GA 30309',
+  '1856 Piedmont Ave NE, Atlanta, GA 30324',
+  '761 Sidney Marcus Blvd NE, Atlanta, GA 30324',
+  '2319 Cheshire Bridge Rd NE, Atlanta, GA 30324',
+  '2239 Cheshire Bridge Rd NE, Atlanta, GA 30324',
+  '2320 Cheshire Bridge Rd NE, Atlanta, GA 30324',
+  '2353 Cheshire Bridge Rd NE, Atlanta, GA 30324',
+  '610 Spring St NW, Atlanta, GA 30308',
+  '1836 Briarcliff Rd NE, Atlanta, GA 30329',
+  '2448 Cheshire Bridge Rd NE, Atlanta, GA 30324',
+
+  '639 Morosgo Dr NE, Atlanta, GA 30324',
+  '2374 Briarcliff Rd NE, Atlanta, GA 30329',
+  '1181 McPherson Ave SE, Atlanta, GA 30316',
+  '2195 Monroe Dr NE, Atlanta, GA 30324',
+  '496 Plasters Ave NE, Atlanta, GA 30324',
+  '2800 Buford Hwy NE, Atlanta, GA 30324',
+  '2200 Monroe Dr NE, Atlanta, GA 30324',
+  '2911 Buford Hwy NE, Atlanta, GA 30329',
+  '2375 N Druid Hills Rd NE, Atlanta, GA 30329',
+  '2289 N Druid Hills Rd NE, Atlanta, GA 30329',
+
+  '2555 Piedmont Rd NE #100, Atlanta, GA 30324',
+  '2625 Piedmont Rd NE suite 55, Atlanta, GA 30324',
+  '541 Main St NE F170, Atlanta, GA 30324',
+  '2469 Piedmont Rd NE, Atlanta, GA 30324',
+  '2561 Piedmont Rd NE, Atlanta, GA 30324',
+  '1879 Cheshire Bridge Rd NE, Atlanta, GA 30324',
+  '3393 Peachtree Rd NE Ste 3058B, Atlanta, GA 30326',
+  '2430 Piedmont Rd NE, Atlanta, GA 30324',
+  '573 Main St NE, Atlanta, GA 30324',
+  '2100 Cheshire Bridge Rd NE, Atlanta, GA 30324',
+
+  '1958 Piedmont Rd NE, Atlanta, GA 30324',
+  '1940 Piedmont Rd NE, Atlanta, GA 30324',
+  '1842 Piedmont Ave NE, Atlanta, GA 30324',
+  '1842 Piedmont Ave NE, Atlanta, GA 30324',
+  '56 E Andrews Dr NW Suite 17, Atlanta, GA 30305',
+  '1824 Cheshire Bridge Rd NE, Atlanta, GA 30324',
+  '2184 Cheshire Bridge Rd NE, Atlanta, GA 30324',
+  '2591 Piedmont Rd NE #1110, Atlanta, GA 30324',
+  '2770 Lenox Rd NE, Atlanta, GA 30324',
+  '2350 Cheshire Bridge Rd NE, Atlanta, GA 30324',
+
+  '515 Garson Dr NE, Atlanta, GA 30324',
+  'Lindridge Way NE, Atlanta, GA 30324',
+  '764 Miami Cir NE, Atlanta, GA 30324',
+  '1438 Sheridan Rd NE, Atlanta, GA 30324',
+  '1408 Mayson St NE, Atlanta, GA 30324',
+  '1700 Piedmont Ave NE, Atlanta, GA 30324',
+  '2461 Peachtree Rd, Atlanta, GA 30305',
+  '2715 Peachtree Rd, Atlanta, GA 30305',
+  '2108 Briarcliff Rd NE, Atlanta, GA 30329',
+  '1095 Zonolite Rd NE #100th, Atlanta, GA 30306',
+
+  '3180 Peachtree Rd NE, Atlanta, GA 30305',
+  '750 Hammond Dr # 12-310, Sandy Springs, GA 30328',
+  '1580 Peachtree Rd NW, Atlanta, GA 30309',
+  '1406 Sheridan Rd NE, Atlanta, GA 30324',
+  '1411 N Morningside Dr NE, Atlanta, GA 30306',
+  '1790 Lavista Rd, Atlanta, GA 30329',
+  '1015 E Rock Springs Rd NE, Atlanta, GA 30306',
+  '3336 Peachtree Rd NE, Atlanta, GA 30326',
+  '1740 Peachtree Rd NW, Atlanta, GA 30309',
+  '2744 Peachtree Rd NW, Atlanta, GA 30305'
+]
+
+def get_address(addresses)
+  address = addresses.sample
+  addresses.delete(address)
+  address
+end
+
 puts 'Creating users'
 
 # Static user data
-brandon = User.create(name: 'Brandon', email: 'brandon@brandon.com', password: '123', user_type: 2)
-robert = User.create(name: 'Robert', email: 'robert@robert.com', password: '123', user_type: 1)
-lindsey = User.create(name: 'Lindsey', email: 'lindsey@lindsey.com', password: '123', user_type: 1)
-geoffrey = User.create(name: 'Geoffrey', email: 'geoffrey@geoffrey.com', password: '123', user_type: 0)
-cory = User.create(name: 'Cory', email: 'cory@cory.com', password: '123', user_type: 0)
-joey = User.create(name: 'Joey', email: 'joey@joey.com', password: '123', user_type: 0)
+brandon = User.create(name: 'Brandon', email: 'brandon@brandon.com', password: '123', user_type: 2, address: get_address(addresses))
+robert = User.create(name: 'Robert', email: 'robert@robert.com', password: '123', user_type: 1, address: get_address(addresses))
+lindsey = User.create(name: 'Lindsey', email: 'lindsey@lindsey.com', password: '123', user_type: 1, address: get_address(addresses))
+geoffrey = User.create(name: 'Geoffrey', email: 'geoffrey@geoffrey.com', password: '123', user_type: 0, address: get_address(addresses))
+cory = User.create(name: 'Cory', email: 'cory@cory.com', password: '123', user_type: 0, address: get_address(addresses))
+joey = User.create(name: 'Joey', email: 'joey@joey.com', password: '123', user_type: 0, address: get_address(addresses))
 
+index = 1
 # Faker user data
-3.times do
-  User.create(name: Faker::Name.name, email: Faker::Internet.email, password: '123', user_type: 2)
+2.times do
+  User.create(name: Faker::Name.name, email: Faker::Internet.email, password: '123', user_type: 2, address: get_address(addresses))
+  puts "Created dispatcher #{index}"
+  index += 1
 end
 
-15.times do
-  User.create(name: Faker::Name.name, email: Faker::Internet.email, password: '123', user_type: 1)
+index = 1
+8.times do
+  User.create(name: Faker::Name.name, email: Faker::Internet.email, password: '123', user_type: 1, address: get_address(addresses))
+  puts "Created nurse #{index}"
+  index += 1
 end
 
-60.times do
-  User.create(name: Faker::Name.name, email: Faker::Internet.email, password: '123', user_type: 0)
+index = 1
+30.times do
+  User.create(name: Faker::Name.name, email: Faker::Internet.email, password: '123', user_type: 0, address: get_address(addresses))
+  puts "Created patient #{index}"
+  index += 1
 end
 
 puts 'Users created'
