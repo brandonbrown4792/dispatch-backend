@@ -23,15 +23,12 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  def initialize(args)
+  def address=(address)
+    get_coordinates(address)
     super
-    address = args[:address]
-    if address
-      self.get_coordinates
-    end
   end
 
-  def get_coordinates
+  def get_coordinates(address)
     Mapbox.access_token = 'pk.eyJ1IjoiaG9vYmllNDc5MiIsImEiOiJja2JiN3duZzcwMXRlMnRvbDA4bTlkMm5vIn0.aOpsoQbBFrcHCgIsqAZEBQ'
     places = Mapbox::Geocoder.geocode_forward(address)
     self.latitude = places.first['features'].first['center'][1]
