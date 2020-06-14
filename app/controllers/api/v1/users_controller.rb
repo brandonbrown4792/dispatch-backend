@@ -17,14 +17,14 @@ class Api::V1::UsersController < ApplicationController
       render json: {
         email: current_user.email,
         user_type: user_type,
-        nurses: current_user.dispatcher_nurses.as_json(only: [:id, :name, :email, :address]),
-        patients: current_user.dispatcher_patients.as_json(only: [:id, :name, :email, :address])
+        nurses: current_user.dispatcher_nurses.as_json(only: [:id, :name, :email, :address, :latitude, :longitude]),
+        patients: current_user.dispatcher_patients.as_json(only: [:id, :name, :email, :address, :latitude, :longitude])
       }, status: :ok
     elsif user_type == 'nurse'
       render json: {
         email: current_user.email,
         user_type: user_type,
-        patients: current_user.patients.as_json(only: [:id, :name, :email, :address]),
+        patients: current_user.patients.as_json(only: [:id, :name, :email, :address, :latitude, :longitude]),
         appointments: current_user.nurse_appointments.as_json(except: [:created_at, :updated_at])
       }, status: :ok
     elsif user_type == 'patient'
