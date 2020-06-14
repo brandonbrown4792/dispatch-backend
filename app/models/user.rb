@@ -22,7 +22,21 @@ class User < ApplicationRecord
   has_one :patient_dispatcher, through: :pd_relationship, source: :dispatcher
 
   has_secure_password
-  
+
+  def initialize(args)
+    super
+    address = args[:address]
+    if address
+      self.get_coordinates
+    end
+  end
+
+  def get_coordinates
+    Mapbox.access_token = 'pk.eyJ1IjoiaG9vYmllNDc5MiIsImEiOiJja2JiN3duZzcwMXRlMnRvbDA4bTlkMm5vIn0.aOpsoQbBFrcHCgIsqAZEBQ'
+    places = Mapbox::Geocoder.geocode_forward(address)
+    self.latitude = places.first['features'].first['center'][1]
+    self.longitude = places.first['features'].first['center'][0]
+  end
   
   def get_user_type
     Rails.application.config.user_types[self.user_type]
