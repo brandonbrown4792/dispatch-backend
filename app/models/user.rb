@@ -23,12 +23,9 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  def initialize(args)
+  def address=(address)
     super
-    address = args[:address]
-    if address
-      self.get_coordinates
-    end
+    get_coordinates
   end
 
   def get_coordinates
