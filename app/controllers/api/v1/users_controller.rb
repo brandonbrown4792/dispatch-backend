@@ -31,7 +31,8 @@ class Api::V1::UsersController < ApplicationController
       render json: {
         email: current_user.email,
         user_type: user_type,
-        nurses: current_user.nurses.as_json(only: [:id, :name, :email])
+        nurses: current_user.nurses.as_json(only: [:id, :name, :email]),
+        appointments: current_user.patient_appointments.as_json(except: [:created_at, :updated_at])
       }, status: :ok
     end
   end
