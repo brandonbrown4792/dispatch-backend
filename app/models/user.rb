@@ -12,18 +12,19 @@ class User < ApplicationRecord
   # Dispatcher / Nurse relationships
   has_many :dn_relationships, class_name: 'DispatcherNurse', foreign_key: :dispatcher_id # Dispatcher has many nurse relationships
   has_one :nd_relationship, class_name: 'DispatcherNurse', foreign_key: :nurse_id # Nurse has one dispatcher relationship
-  has_many :nurses, through: :dn_relationships
-  has_one :dispatcher, through: :nd_relationship
+  has_many :dispatcher_nurses, through: :dn_relationships, source: :nurse
+  has_one :nurse_dispatcher, through: :nd_relationship, source: :dispatcher
   
   # Dispatcher / Patient relationships
   has_many :dp_relationships, class_name: 'DispatcherPatient', foreign_key: :dispatcher_id # Dispatcher has many patient relationships
   has_one :pd_relationship, class_name: 'DispatcherPatient', foreign_key: :patient_id # Patient has one dispatcher relationship
-  has_many :patients, through: :dp_relationships
-  has_one :dispatcher, through: :pd_relationship
+  has_many :dispatcher_patients, through: :dp_relationships, source: :patient
+  has_one :patient_dispatcher, through: :pd_relationship, source: :dispatcher
 
   has_secure_password
-
-  def self.user_type
-    {patient: 0, nurse: 1, dispatcher: 2}
+  
+  
+  def get_user_type
+    Rails.application.config.user_types[self.user_type]
   end
 end
