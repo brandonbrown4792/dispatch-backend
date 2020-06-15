@@ -146,7 +146,7 @@ patients.each do |patient|
   rand(1..5).times do
     date_time = DateTime.now + rand(1..10).days
     date_time.change(hour: rand(8..17), minute: 0)
-    Appointment.create(start_time: date_time, length: rand(0..1) ? 60 : 30, patient: patient, nurse: nurses.sample, reason: reasons.sample)
+    Appointment.create(start_time: date_time, length: rand(0..1) ? 60 : 30, patient: patient, nurse: nurses.sample, reason: reasons.sample, address: patient.address)
   end
 end
 puts 'Appointments created'
