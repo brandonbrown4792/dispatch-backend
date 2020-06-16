@@ -19,21 +19,21 @@ class Api::V1::UsersController < ApplicationController
         user_type: user_type,
         nurses: current_user.dispatcher_nurses.uniq.as_json(only: [:id, :name, :email, :address, :latitude, :longitude]),
         patients: current_user.dispatcher_patients.uniq.as_json(only: [:id, :name, :email, :address, :latitude, :longitude]),
-        appointments: current_user.dispatcher_patients.uniq.map{|patient| patient.patient_appointments}.flatten.as_json(except: [:created_at, :updated_at], include: [notes: {only: :content}, nurse: {only: :name}])
+        appointments: current_user.dispatcher_patients.uniq.map{|patient| patient.patient_appointments}.flatten.as_json(except: [:created_at, :updated_at], include: [notes: {only: :content}, nurse: {only: :name}, patient: {only: :name}])
       }, status: :ok
     elsif user_type == 'nurse'
       render json: {
         email: current_user.email,
         user_type: user_type,
         patients: current_user.patients.uniq.as_json(only: [:id, :name, :email, :address, :latitude, :longitude]),
-        appointments: current_user.nurse_appointments.as_json(except: [:created_at, :updated_at], include: [notes: {only: :content}, nurse: {only: :name}])
+        appointments: current_user.nurse_appointments.as_json(except: [:created_at, :updated_at], include: [notes: {only: :content}, nurse: {only: :name}, patient: {only: :name}])
       }, status: :ok
     elsif user_type == 'patient'
       render json: {
         email: current_user.email,
         user_type: user_type,
         nurses: current_user.nurses.uniq.as_json(only: [:id, :name, :email]),
-        appointments: current_user.patient_appointments.as_json(except: [:created_at, :updated_at], include: [notes: {only: :content}, nurse: {only: :name}])
+        appointments: current_user.patient_appointments.as_json(except: [:created_at, :updated_at], include: [notes: {only: :content}, nurse: {only: :name}, patient: {only: :name}])
       }, status: :ok
     end
   end
