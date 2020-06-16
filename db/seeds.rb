@@ -148,7 +148,7 @@ patients.each do |patient|
     day = rand(1..29)
     hour = rand(8..17)
     minute = [true, false].sample ? 0 : 30
-    date_time = DateTime.new(2020, month, day, hour, minute, 0)
+    date_time = DateTime.new(2020, month, day, hour, minute, 0, today.zone)
     Appointment.create(start_time: date_time, length: [true, false].sample ? 60 : 30, patient: patient, nurse: nurses.sample, reason: reasons.sample, address: patient.address)
   end
 end
