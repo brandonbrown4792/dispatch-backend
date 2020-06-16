@@ -15,6 +15,15 @@ class Api::V1::AppointmentsController < ApplicationController
     end
   end
 
+  def update
+    @appointment = find_appointment
+    if @appointment.update(appointment_params)
+      render :json => @appointment, :status => :ok
+    else
+      render :json => { msg: "Appointment update failed." }, :status => :bad_request
+    end
+  end
+
   def destroy
     @appointment.destroy
     if @appointment.persisted?
@@ -31,7 +40,13 @@ class Api::V1::AppointmentsController < ApplicationController
   end
 
   def find_appintment
-    @user = Appointment.find_by(id: params[:id])
+    @appointment = Appointment.find_by(id: params[:id])
+    if !@appointment
+      render :json => { msg: "Could not find appointment" }, :status => :bad_request
+    else
+        return @appointment
+    end
   end
+
 end
 
