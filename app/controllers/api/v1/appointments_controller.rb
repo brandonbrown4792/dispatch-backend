@@ -2,13 +2,16 @@ class Api::V1::AppointmentsController < ApplicationController
 
   def create
     @appointment = Appointment.new(appointment_params)
-    @user = User.find_by(id: params[:id])
-    @appointment.address = @user.address
+    byebug
+    @user = User.find_by(id: appointment_params[:patient_id])
+    if @user
+      @appointment.address = @user.address
+    end
     @appointment.save
     if @appointment.persisted?
-      render json: @appointment, status: ok
+      render :json => @appointment, :status => :ok
     else 
-      render json: => { "msg" => "Appointment Creation Failed." }, :status => :bad_request
+      render :json => { "msg" => "Appointment Creation Failed." }, :status => :bad_request
     end
   end
 
@@ -20,7 +23,7 @@ class Api::V1::AppointmentsController < ApplicationController
       render :json => { "msg" => "Appointment was destroyed!"}, :status => :ok
     end
   end
-  
+
   private
 
   def appointment_params
