@@ -41,4 +41,9 @@ class User < ApplicationRecord
   def get_user_type
     Rails.application.config.user_types[self.user_type]
   end
+
+  def get_messages_with(current_user_id, id)
+    messages = Message.where("(sender_id = #{current_user_id} AND recipient_id = #{id}) OR (sender_id = #{id} AND recipient_id = #{current_user_id})").order(:created_at)
+    messages.map{|message| {content: message.content, sender: message.sender_id == current_user_id ? 'self' : 'other'}}
+  end
 end

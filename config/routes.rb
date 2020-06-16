@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       post '/login', to: 'sessions#create'
       post '/signup', to: 'users#create'
       post '/get-info', to: 'users#get_info'
+      post '/get-messages', to: 'messages#get_messages'
     end
   end
 end
