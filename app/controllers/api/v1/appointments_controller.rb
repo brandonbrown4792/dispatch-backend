@@ -35,10 +35,10 @@ class Api::V1::AppointmentsController < ApplicationController
   private
 
   def appointment_params
-    params.require(:appointment).permit(:patient_id, :nurse_id, :address, :start_time, :length, :reason, :notes)
+    params.require(:appointment).permit(:patient_id, :nurse_id, :start_time, :length, :reason)
   end
 
-  def find_appintment
+  def find_appointment
     @appointment = Appointment.find_by(id: params[:id])
     if !@appointment
       render :json => { msg: "Could not find appointment" }, :status => :bad_request
