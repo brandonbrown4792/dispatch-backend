@@ -100,22 +100,14 @@ cory = User.create(name: 'Cory', email: 'cory@cory.com', password: '123', user_t
 joey = User.create(name: 'Joey', email: 'joey@joey.com', password: '123', user_type: 0, address: get_address(addresses))
 
 index = 1
-# Faker user data
-2.times do
-  User.create(name: Faker::Name.name, email: Faker::Internet.email, password: '123', user_type: 2, address: get_address(addresses))
-  puts "Created dispatcher #{index}"
-  index += 1
-end
-
-index = 1
-8.times do
+5.times do
   User.create(name: Faker::Name.name, email: Faker::Internet.email, password: '123', user_type: 1, address: get_address(addresses))
   puts "Created nurse #{index}"
   index += 1
 end
 
 index = 1
-30.times do
+15.times do
   User.create(name: Faker::Name.name, email: Faker::Internet.email, password: '123', user_type: 0, address: get_address(addresses))
   puts "Created patient #{index}"
   index += 1
