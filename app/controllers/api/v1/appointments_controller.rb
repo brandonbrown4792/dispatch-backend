@@ -9,7 +9,7 @@ class Api::V1::AppointmentsController < ApplicationController
     end
     @appointment.save
     if @appointment.persisted?
-      render :json => @appointment, :status => :ok
+      render :json => @appointment.as_json(except: [:created_at, :updated_at], include: [notes: {only: :content}, nurse: {only: [:id, :name]}, patient: {only: [:id, :name]}]), :status => :ok
     else 
       render :json => { msg: "Appointment Creation Failed." }, :status => :bad_request
     end
