@@ -12,9 +12,9 @@ The backend install steps require the following on your system
 * Postgresql
 
 
-## Install Intructions
+## Install Instructions
 1. Clone this repository to you local machine.
-2. Once cloned, navigate to the base folder of this repositry.
+2. Once cloned, navigate to the base folder of this repository.
 3. Run bundle install in the terminal to install required gems.
 4. Run rails db:setup to set up the database.
 5. Run rails s to start the rails server.
